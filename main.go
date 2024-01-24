@@ -1,30 +1,35 @@
 package main
 
 import (
-	"errors"
-	"fmt"
 	"net/http"
 	"os"
+	"time"
+
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 )
 
 func main() {
+
+	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr, TimeFormat: time.RFC3339})
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+
+	log.Info().Msg("Starting server.")
+
+	config := SetupConfig()
 	mux := http.NewServeMux()
 
+	// Register handlers
 	mux.HandleFunc("/", GetRoot)
-	mux.HandleFunc("/hello", GetHello)
 
-	fmt.Println("Starting server on port: 8000.")
+	log.Info().Str("Env", config.environment).Str("Port", config.port).Msg("Starting started successfully.")
+	error := http.ListenAndServe(":"+config.port, mux)
 
-	error := http.ListenAndServe(":8000", mux)
+	if error != nil {
 
-	if errors.Is(error, http.ErrServerClosed) {
-
-		fmt.Printf("Server closed.\n")
-
-	} else if error != nil {
-
-		fmt.Printf("Error starting server: %s\n", error)
+		log.Error().Err(error).Msg("Error starting server.")
 		os.Exit(1)
 
 	}
+
 }
