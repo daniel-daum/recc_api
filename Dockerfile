@@ -8,7 +8,7 @@ RUN go mod download && go mod verify
 
 COPY . .
 
-# EXPOSE 8000
+EXPOSE 8000
 
 RUN go build -v -o /usr/local/bin/malicious_pickle ./
 
