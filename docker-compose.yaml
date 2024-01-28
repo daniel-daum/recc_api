@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  malicious_pickle_api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: malicious_pickle_api
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"

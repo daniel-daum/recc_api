@@ -13,16 +13,14 @@ func main() {
 
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr, TimeFormat: time.RFC3339})
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
-
-	log.Info().Msg("Starting server.")
-
 	config := SetupConfig()
 	mux := http.NewServeMux()
+
+	log.Info().Str("ENV", config.environment).Str("PORT", config.port).Msg("Starting listener.")
 
 	// Register handlers
 	mux.HandleFunc("/", GetRoot)
 
-	log.Info().Str("Env", config.environment).Str("Port", config.port).Msg("Starting started successfully.")
 	error := http.ListenAndServe(":"+config.port, mux)
 
 	if error != nil {

@@ -10,6 +10,7 @@ import (
 type configuration struct {
 	environment string
 	port        string
+	database    string
 }
 
 func SetupConfig() *configuration {
@@ -22,15 +23,16 @@ func SetupConfig() *configuration {
 	}
 
 	env := os.Getenv("MALICIOUS_PICKLE_ENV")
-	port := os.Getenv("PORT")
+	port := os.Getenv("MALICIOUS_PICKLE_PORT")
+	database := os.Getenv("MALICIOUS_PICKLE_DB")
 
 	if env == "" {
 		env = "development"
 	}
 
-	config := configuration{environment: env, port: port}
+	config := configuration{environment: env, port: port, database: database}
 
-	log.Info().Msg("Config loaded successfully.")
+	log.Info().Msg("Environment loaded successfully.")
 
 	return &config
 }
