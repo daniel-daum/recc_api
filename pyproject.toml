@@ -1,0 +1,15 @@
+[project]
+name = "malicious_pickle"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "daniel daum", email = "daniel_daum@outlook.com"},
+]
+dependencies = []
+requires-python = "==3.12.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
