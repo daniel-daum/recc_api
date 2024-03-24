@@ -1,15 +1,51 @@
 [project]
-name = "malicious_pickle"
+name = "recc_api"
 version = "0.1.0"
 description = "Default template for PDM package"
 authors = [
     {name = "daniel daum", email = "daniel_daum@outlook.com"},
 ]
-dependencies = []
-requires-python = "==3.12.*"
+dependencies = [
+    "litestar>=2.7.0",
+    "sqlalchemy>=2.0.28",
+    "psycopg[binary]>=3.1.18",
+    "structlog>=24.1.0",
+    "python-jose[cryptography]>=3.3.0",
+    "passlib[bcrypt]>=1.7.4",
+    "pydantic>=2.6.4",
+    "cryptography>=42.0.5",
+    "uvicorn>=0.28.0",
+    "atlas-provider-sqlalchemy>=0.1.4",
+    "pydantic-settings>=2.2.1",
+]
+requires-python = "==3.11.*"
 readme = "README.md"
-license = {text = "MIT"}
-
+license = {text = "None"}
 
 [tool.pdm]
 distribution = false
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "ruff>=0.3.3",
+    "pytest>=8.1.1",
+    "pytest-sugar>=1.0.0",
+    "pytest-cov>=4.1.0",
+]
+
+[tool.pdm.scripts]
+dev = "uvicorn recc.server:app --reload"
+test = "pytest tests"
+lint = "ruff check ./recc --fix --select I"
+style = "ruff format ./recc"
+format = {composite = ["lint", "style"]}
+recc = "pdm export -o requirements.txt --prod --without-hashes"
+
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "tab"
+docstring-code-format = true
