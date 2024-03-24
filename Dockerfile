@@ -1,15 +1,13 @@
-FROM golang:1.21
+FROM python:3.11
 
-WORKDIR /usr/src/app
+WORKDIR /code
 
-COPY go.mod go.sum ./
+COPY ./requirements.txt /code/requirements.txt
 
-RUN go mod download && go mod verify
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-COPY . .
+COPY /recc ./
 
 EXPOSE 8000
 
-RUN go build -v -o /usr/local/bin/malicious_pickle ./
-
-CMD ["malicious_pickle"]
+CMD ["uvicorn", "recc.server:app", "--host", "0.0.0.0", "--port", "8000"]
