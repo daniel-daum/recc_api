@@ -1,0 +1,29 @@
+name: test
+
+on:
+  workflow_call:
+
+  workflow_dispatch:
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: [ '1.22' ]
+
+    steps:
+      - name: setup Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: get dependencies
+        run: go mod download
+
+      - name: run tests
+        run: go test

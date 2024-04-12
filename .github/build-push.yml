@@ -1,0 +1,38 @@
+  name: build & push
+
+on:
+  workflow_call:
+
+  workflow_dispatch:
+
+jobs:
+  build-push:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: [ '1.22' ]
+
+    steps:
+
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: build
+        run: docker build -t recc .
+
+      - name: install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: authenticate with container registry 
+        run: doctl registry login --expiry-seconds 600
+
+      - name: Tag image 
+        run:
+          docker tag sample/my-page \
+          registry.digitalocean.com/my-sample-registry/my-sample-page:${{github.event.inputs.version }}
+
+      - name: Push image to DO Container Registry 
+        run: docker push registry.digitalocean.com/my-sample-registry/my-sample-page:${{ github.event.inputs.version }}
