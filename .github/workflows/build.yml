@@ -1,9 +1,7 @@
-  name: build & push
+name: build & push
 
 on:
   workflow_call:
-
-  workflow_dispatch:
 
 jobs:
   build-push:
@@ -31,8 +29,7 @@ jobs:
 
       - name: Tag image 
         run:
-          docker tag sample/my-page \
-          registry.digitalocean.com/my-sample-registry/my-sample-page:${{github.event.inputs.version }}
+          docker tag recc registry.digitalocean.com/recc-registry/recc
 
       - name: Push image to DO Container Registry 
-        run: docker push registry.digitalocean.com/my-sample-registry/my-sample-page:${{ github.event.inputs.version }}
+        run: docker push registry.digitalocean.com/recc-registry/recc
