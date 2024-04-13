@@ -13,4 +13,5 @@ jobs:
 
   deploy:
     name: deploy build
+    needs: unit-tests
     uses: ./.github/workflows/build.yml
