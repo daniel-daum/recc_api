@@ -10,3 +10,7 @@ jobs:
   unit-tests:
     name: unit tests
     uses: ./.github/workflows/tests.yml
+
+  deploy:
+    name: deploy build
+    uses: ./.github/workflows/build.yml
