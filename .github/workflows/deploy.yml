@@ -1,0 +1,35 @@
+name: deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: tailscale
+        uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
+      - name: ssh
+        run: ssh ${{ secrets.username }}@${{ secrets.host }}
+
+      - name: clone repository
+        run: git clone https://github.com/daniel-daum/recc_api.git
+
+      - name: change directories
+        run: cd recc_api
+
+      - name: login to registry
+        run: doctl registry login
+
+      - name: pull new image
+        run: docker compose pull
+
+      - name: run new image
+        run: docker compose up --build
