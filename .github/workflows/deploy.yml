@@ -1,8 +1,13 @@
 name: deploy
 
 on:
-  push:
+  workflow_dispatch:
+    
+  workflow_run:
+    workflows: ["build & push"]
     branches: [ main ]
+    types:
+      - completed
 
 jobs:
   build-push:
@@ -14,7 +19,7 @@ jobs:
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci
+          tags: tag:server
 
       - name: ssh
         run: ssh ${{ secrets.username }}@${{ secrets.host }}
