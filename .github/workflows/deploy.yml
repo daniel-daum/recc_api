@@ -22,19 +22,4 @@ jobs:
           tags: tag:server
 
       - name: ssh
-        run: ssh ${{ secrets.username }}@${{ secrets.host }}
-
-      - name: clone repository
-        run: git clone https://github.com/daniel-daum/recc_api.git
-
-      - name: change directories
-        run: cd recc_api
-
-      - name: login to registry
-        run: doctl registry login
-
-      - name: pull new image
-        run: docker compose pull
-
-      - name: run new image
-        run: docker compose up --build
+        run: ssh -t  ${{ secrets.username }}@${{ secrets.host }} 'sh cicd.sh'
