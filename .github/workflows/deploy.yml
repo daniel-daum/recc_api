@@ -19,7 +19,7 @@ jobs:
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:server
+          tags: tag:ci
 
       - name: ssh
-        run: ssh -t  ${{ secrets.username }}@${{ secrets.host }} 'sh cicd.sh'
+        run: tailscale ssh   ${{ secrets.username }}@${{ secrets.host }} 'sh cicd.sh'
