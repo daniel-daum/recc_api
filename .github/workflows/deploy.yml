@@ -22,4 +22,4 @@ jobs:
           tags: tag:server
 
       - name: ssh
-        run: ssh -t  ${{ secrets.username }}@${{ secrets.host }} 'sh cicd.sh'
+        run: tailscale ssh -t  ${{ secrets.username }}@${{ secrets.host }} 'sh cicd.sh'
