@@ -1,13 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"github.com/daniel-daum/recc_api/recc"
 )
 
-func Hello() string {
-	return "Hello, world"
-}
-
 func main() {
-	fmt.Println(Hello())
+	recc.StartServer()
 }
