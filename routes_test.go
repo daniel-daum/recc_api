@@ -19,7 +19,6 @@ func TestHealthCheck(t *testing.T) {
 
 		expected := HealthResponse{Status: "Healthy"}
 		var result HealthResponse
-
 		err := json.NewDecoder(response.Body).Decode(&result)
 
 		assert.Nil(t, err)
