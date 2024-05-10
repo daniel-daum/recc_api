@@ -21,3 +21,4 @@
 go.work
 recc_api
 tmp/
+.env
