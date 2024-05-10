@@ -17,7 +17,7 @@ func TestHealthCheck(t *testing.T) {
 
 		HealthCheck(response, request)
 
-		expected := HealthResponse{Status: "Healthy"}
+		expected := HealthResponse{Status: "healthy"}
 		var result HealthResponse
 		err := json.NewDecoder(response.Body).Decode(&result)
 
