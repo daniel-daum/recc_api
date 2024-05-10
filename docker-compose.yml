@@ -1,4 +1,0 @@
-services:
-  recc:
-    build: .
-    image:  registry.digitalocean.com/recc-registry/recc

@@ -1,13 +1,23 @@
 package main
 
 import (
-	"fmt"
+	"log/slog"
+	"os"
+	"time"
+
+	"github.com/lmittmann/tint"
 )
 
-func Hello() string {
-	return "Hello, world"
-}
-
 func main() {
-	fmt.Println(Hello())
+	// Global logging settings
+	slog.SetDefault(slog.New(
+		tint.NewHandler(os.Stderr, &tint.Options{
+			Level:      slog.LevelDebug,
+			TimeFormat: time.Kitchen,
+		}),
+	))
+
+	settings := GetSettings()
+
+	StartServer(settings)
 }
