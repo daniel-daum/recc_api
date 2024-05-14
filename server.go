@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log/slog"
 	"net/http"
 	"os"
@@ -12,7 +11,8 @@ import (
 func StartServer(settings *Settings) {
 	router := http.NewServeMux()
 
-	router.HandleFunc("GET /", HealthCheck)
+	router.HandleFunc("GET /health", HealthCheck)
+	router.HandleFunc("GET /reference", Reference)
 
 	finalRouter := LoggingMiddleware(router)
 
@@ -25,7 +25,7 @@ func StartServer(settings *Settings) {
 	err := server.ListenAndServe()
 
 	if err != nil {
-		fmt.Println(err)
+		slog.Error("Error starting server", slog.Any("error", err))
 	}
 }
 

@@ -1,0 +1,52 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "The Recc API documentation.",
+        "title": "Recc API",
+        "contact": {
+            "name": "Daniel Daum"
+        },
+        "version": "0.1.0"
+    },
+    "host": "localhost:8000",
+    "paths": {
+        "/health": {
+            "get": {
+                "description": "Returns JSON response \"healthy\"",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Health",
+                "responses": {
+                    "200": {
+                        "description": "HealthResponse JSON",
+                        "schema": {
+                            "$ref": "#/definitions/main.HealthResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/reference": {
+            "get": {
+                "description": "Returns Recc API scalar documentation",
+                "produces": [
+                    "text/html"
+                ],
+                "summary": "Reference",
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "main.HealthResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "healthy"
+                }
+            }
+        }
+    }
+}
