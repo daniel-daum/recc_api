@@ -1,0 +1,34 @@
+definitions:
+  main.HealthResponse:
+    properties:
+      status:
+        example: healthy
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact:
+    name: Daniel Daum
+  description: The Recc API documentation.
+  title: Recc API
+  version: 0.1.0
+paths:
+  /health:
+    get:
+      description: Returns JSON response "healthy"
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: HealthResponse JSON
+          schema:
+            $ref: '#/definitions/main.HealthResponse'
+      summary: Health
+  /reference:
+    get:
+      description: Returns Recc API scalar documentation
+      produces:
+      - text/html
+      responses: {}
+      summary: Reference
+swagger: "2.0"
